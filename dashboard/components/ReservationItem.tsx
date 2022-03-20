@@ -16,13 +16,15 @@ const ReservationItem = ({
         return d.N_NO === aircraftTailNum;
     });
 
+    // Array of hours after each flight. Matched by index to filteredData
     const hoursLeft: Array<number> = [filteredData.length];
 
+    // Calculate each schedule's length
     filteredData.forEach((schedule: any) => {
-        let startTime = new Date(schedule.sch_start);
-        let endTime = new Date(schedule.sch_end);
         schedule.sch_length_hours =
-            Math.abs(endTime.getTime() - startTime.getTime()) /
+            Math.abs(
+                Date.parse(schedule.sch_end) - Date.parse(schedule.sch_start)
+            ) /
             (60 * 60 * 1000);
     });
 
