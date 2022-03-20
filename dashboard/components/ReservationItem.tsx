@@ -28,8 +28,7 @@ const ReservationItem = ({
             (60 * 60 * 1000);
     });
 
-    console.log(filteredData);
-
+    // Populate hoursLeft array
     for (let i = 0; i < filteredData.length; i++) {
         if (i == 0) {
             aircraftData.forEach((aircraft) => {
@@ -43,8 +42,6 @@ const ReservationItem = ({
             hoursLeft[i] = hoursLeft[i - 1] - filteredData[i].sch_length_hours;
         }
     }
-
-    console.log(hoursLeft);
 
     return filteredData.map((schedule: any, i: number) => {
         let startTime = new Date(schedule.sch_start);
