@@ -115,7 +115,9 @@ const HoursTilMaint: NextComponentType = () => {
                                 hoursLeft - length < 0 ? { color: 'red' } : {}
                             }
                         >
-                            <h3>{schedule.N_NO} -</h3>
+                            <h3>
+                                {schedule.N_NO} - {schedule.NAME}
+                            </h3>
                             <p>{startTime.toTimeString()}</p>
                             <p>{endTime.toTimeString()}</p>
                             <p>Flight length: {length.toFixed(1)} hours</p>
