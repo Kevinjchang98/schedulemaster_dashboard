@@ -8,6 +8,7 @@ import {
 import { NextComponentType } from 'next';
 import { useEffect, useState } from 'react';
 import { firestore } from '../firestore/clientApp';
+import ReservationsList from './ReservationsList';
 
 const HoursTilMaint: NextComponentType = () => {
     // Referencing https://www.section.io/engineering-education/introduction-to-nextjs-with-typescript-and-firebase-database
@@ -15,6 +16,8 @@ const HoursTilMaint: NextComponentType = () => {
         QueryDocumentSnapshot<DocumentData>[]
     >([]);
     const [scheduleData, setScheduleData] = useState<Array<{}>>([]);
+    const [aircraftList, setAircraftList] = useState<Array<{}>>([]);
+
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
     const aircraftCollection = collection(firestore, 'aircraft');
@@ -23,8 +26,8 @@ const HoursTilMaint: NextComponentType = () => {
         let promises = [];
 
         promises.push(getAircraftData());
-
         promises.push(getScheduleData());
+        promises.push(getAircraftList());
 
         Promise.all(promises).then(() => {
             setIsLoaded(true);
@@ -37,7 +40,6 @@ const HoursTilMaint: NextComponentType = () => {
         );
 
         await res.json().then((d) => {
-            console.log(d.response);
             setScheduleData(d.response);
         });
     };
@@ -55,12 +57,28 @@ const HoursTilMaint: NextComponentType = () => {
         setAircraftData(result);
     };
 
+    const getAircraftList = async () => {
+        const res = await fetch(
+            'https://schedulemaster-dashboard.herokuapp.com/sample-aircraft-list'
+        );
+
+        await res.json().then((d) => {
+            console.log(
+                d.response.filter((d: any) => {
+                    return d.CATEGORY === 'AIRPLANE';
+                })
+            );
+
+            setAircraftList(
+                d.response.filter((d: any) => {
+                    return d.CATEGORY === 'AIRPLANE';
+                })
+            );
+        });
+    };
+
     useEffect(() => {
         runQueries();
-
-        setTimeout(() => {
-            setIsLoaded(true);
-        }, 2000);
     }, []);
 
     return (
@@ -88,44 +106,12 @@ const HoursTilMaint: NextComponentType = () => {
                 ))
             )}
 
-            <h1>Flight reservations</h1>
-
-            {!isLoaded ? null : scheduleData.length == 0 ? (
-                <div>No schedules</div>
-            ) : (
-                scheduleData.map((schedule: any, i: number) => {
-                    let startTime = new Date(schedule.sch_start);
-                    let endTime = new Date(schedule.sch_end);
-                    let length =
-                        Math.abs(endTime.getTime() - startTime.getTime()) /
-                        (60 * 60 * 1000);
-
-                    let hoursLeft = 0;
-
-                    aircraftData.forEach((aircraft) => {
-                        if (aircraft.data().tail_num === schedule.N_NO) {
-                            hoursLeft = aircraft.data().hours_remaining;
-                        }
-                    });
-
-                    return (
-                        <div
-                            key={i}
-                            style={
-                                hoursLeft - length < 0 ? { color: 'red' } : {}
-                            }
-                        >
-                            <h3>
-                                {schedule.N_NO} - {schedule.NAME}
-                            </h3>
-                            <p>{startTime.toTimeString()}</p>
-                            <p>{endTime.toTimeString()}</p>
-                            <p>Flight length: {length.toFixed(1)} hours</p>
-                            <p>Hours left for aircraft: {hoursLeft}</p>
-                        </div>
-                    );
-                })
-            )}
+            <ReservationsList
+                isLoaded={isLoaded}
+                scheduleData={scheduleData}
+                aircraftData={aircraftData}
+                aircraftList={aircraftList}
+            />
         </div>
     );
 };
