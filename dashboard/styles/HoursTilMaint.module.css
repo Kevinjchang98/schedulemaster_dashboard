@@ -7,6 +7,10 @@
     margin-bottom: 60px;
 }
 
+.aircraftDetailsLink:hover {
+    cursor: pointer;
+}
+
 .sectionNumber {
     font-family: 'Titillium Web', sans-serif;
     color: rgb(177, 177, 177);
