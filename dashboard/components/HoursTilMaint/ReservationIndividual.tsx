@@ -49,7 +49,9 @@ const ReservationIndividual = ({
                         {hoursLeft.toFixed(1)}
                     </p>
                 </>
-            ) : null}
+            ) : (
+                <p>{startTime.toTimeString()}</p>
+            )}
         </div>
     );
 };
