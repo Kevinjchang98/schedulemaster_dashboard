@@ -1,4 +1,5 @@
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
+import ReservationIndividual from './ReservationIndividual';
 
 interface Props {
     scheduleData: any;
@@ -6,7 +7,7 @@ interface Props {
     aircraftTailNum: string;
 }
 
-const ReservationItem = ({
+const ReservationByAircraft = ({
     scheduleData,
     aircraftData,
     aircraftTailNum,
@@ -46,26 +47,20 @@ const ReservationItem = ({
     return filteredData.map((schedule: any, i: number) => {
         let startTime = new Date(schedule.sch_start);
         let endTime = new Date(schedule.sch_end);
-        let length =
-            Math.abs(endTime.getTime() - startTime.getTime()) /
-            (60 * 60 * 1000);
 
         return (
             <div key={i} style={hoursLeft[i] < 0 ? { color: 'red' } : {}}>
-                <h3>
-                    {schedule.N_NO} - {schedule.NAME}
-                </h3>
-                <p>{startTime.toTimeString()}</p>
-                <p>{endTime.toTimeString()}</p>
-                <p>Flight length: {length.toFixed(1)} hours</p>
-                <p>Hours left for aircraft: {hoursLeft[i] + length}</p>
-                <p>
-                    Hours left if flight time is {length.toFixed(1)} hours:{' '}
-                    {hoursLeft[i].toFixed(1)}
-                </p>
+                <ReservationIndividual
+                    i={i}
+                    hoursLeft={hoursLeft[i]}
+                    tailNum={schedule.N_NO}
+                    name={schedule.NAME}
+                    startTime={startTime}
+                    endTime={endTime}
+                />
             </div>
         );
     });
 };
 
-export default ReservationItem;
+export default ReservationByAircraft;

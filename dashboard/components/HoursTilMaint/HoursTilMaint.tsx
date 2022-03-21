@@ -7,7 +7,7 @@ import {
 } from 'firebase/firestore';
 import { NextComponentType } from 'next';
 import { useEffect, useState } from 'react';
-import { firestore } from '../firestore/clientApp';
+import { firestore } from '../../firestore/clientApp';
 import ReservationsList from './ReservationsList';
 
 const HoursTilMaint: NextComponentType = () => {

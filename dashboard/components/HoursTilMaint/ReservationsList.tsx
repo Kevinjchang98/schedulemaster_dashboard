@@ -1,5 +1,5 @@
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
-import ReservationItem from './ReservationItem';
+import ReservationByAircraft from './ReservationByAircraft';
 
 interface Props {
     isLoaded: boolean;
@@ -22,7 +22,7 @@ const ReservationsList = ({
                 <p>No schedules</p>
             ) : (
                 aircraftList.map((d: any, i: number) => (
-                    <ReservationItem
+                    <ReservationByAircraft
                         key={i}
                         scheduleData={scheduleData}
                         aircraftData={aircraftData}
