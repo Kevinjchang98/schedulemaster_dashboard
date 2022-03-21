@@ -78,7 +78,7 @@ const HoursTilMaint: NextComponentType = () => {
 
     const getAircraftList = async () => {
         const res = await fetch(
-            `https://schedulemaster-dashboard.herokuapp.com/sample-aircraft-list?username=${process.env.NEXT_PUBLIC_SM_USERNAME}&password=${process.env.NEXT_PUBLIC_SM_PASSWORD}`
+            `https://schedulemaster-dashboard.herokuapp.com/get-aircraft-list?username=${process.env.NEXT_PUBLIC_SM_USERNAME}&password=${process.env.NEXT_PUBLIC_SM_PASSWORD}`
         );
 
         await res.json().then((d) => {
