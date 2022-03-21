@@ -1,8 +1,33 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
+import urllib.request, json
 
 app = Flask(__name__)
 CORS(app)
+
+# TODO: Filter response by aircraft here and remove filtering logic from frontend
+@app.route('/get-aircraft-list', methods=['GET'])
+def get_aircraft_list():
+    userName = request.args.get('username')
+    password = request.args.get('password')
+
+    apiKeyUrl = "https://smapi.schedulemaster.com/SMapi.aspx?c=findToken&username="+ userName + "&pwd=" + password
+
+    response = urllib.request.urlopen(apiKeyUrl)
+    data = response.read()
+    dict = json.loads(data)
+
+    apiKey = dict["response"]["accounts"][0]["token"]
+
+    aircraftListUrl = "https://smapi.schedulemaster.com/SMapi.aspx?c=getentity&t=" + apiKey + "&entity=res&entity_id=0"
+
+    response = urllib.request.urlopen(aircraftListUrl)
+    data = response.read()
+    dict = json.loads(data)
+
+    return jsonify(dict)
+
+
 
 @app.route('/sample', methods=['GET'])
 def sample():
