@@ -9,37 +9,32 @@ interface Props {
 
 const HoursLeftStats = ({ isLoaded, aircraftData }: Props) => {
     return (
-        <>
+        <div className={styles.container}>
+            <div className={styles.sectionNumber}>01</div>
             <h1 className={styles.subSectionTitle}>Aircraft</h1>
-            <div className={styles.subSectionContentsContainer}>
+            <FadeIn delay={70} className={styles.subSectionContentsContainer}>
                 {!isLoaded ? (
-                    <FadeIn>
-                        <p>Loading</p>
-                    </FadeIn>
+                    <p>Loading</p>
                 ) : aircraftData.length == 0 ? (
-                    <FadeIn>
-                        <div>No aircraft data available</div>
-                    </FadeIn>
+                    <div>No aircraft data available</div>
                 ) : (
                     aircraftData.map((aircraft: any, i: number) => (
-                        <FadeIn delay={200}>
-                            <div key={i}>
-                                <h3>{aircraft.data().tail_num}</h3>
-                                <p
-                                    style={
-                                        aircraft.data().hours_remaining < 10
-                                            ? { color: 'red' }
-                                            : {}
-                                    }
-                                >
-                                    {aircraft.data().hours_remaining} hours left
-                                </p>
-                            </div>
-                        </FadeIn>
+                        <div key={i}>
+                            <h3>{aircraft.data().tail_num}</h3>
+                            <p
+                                style={
+                                    aircraft.data().hours_remaining < 10
+                                        ? { color: 'red' }
+                                        : {}
+                                }
+                            >
+                                {aircraft.data().hours_remaining} hours left
+                            </p>
+                        </div>
                     ))
                 )}
-            </div>
-        </>
+            </FadeIn>
+        </div>
     );
 };
 

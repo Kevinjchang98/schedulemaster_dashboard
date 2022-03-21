@@ -10,8 +10,7 @@ import { useEffect, useState } from 'react';
 import { firestore } from '../../firestore/clientApp';
 import HoursLeftStats from './HoursLeftStats';
 import ReservationsList from './ReservationsList';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import FadeIn from 'react-fade-in/lib/FadeIn';
 
 const HoursTilMaint: NextComponentType = () => {
     // Referencing https://www.section.io/engineering-education/introduction-to-nextjs-with-typescript-and-firebase-database
@@ -96,33 +95,21 @@ const HoursTilMaint: NextComponentType = () => {
 
     return (
         <div>
-            <HoursLeftStats isLoaded={isLoaded} aircraftData={aircraftData} />
+            <FadeIn>
+                <HoursLeftStats
+                    isLoaded={isLoaded}
+                    aircraftData={aircraftData}
+                />
 
-            <h1>Filter</h1>
-            <p>Start Date:</p>
-            <DatePicker
-                selected={startDate}
-                onChange={(date: any) => setStartDate(date)}
-                selectsStart
-                startDate={startDate}
-                endDate={endDate}
-            />
-            <p>End Date:</p>
-            <DatePicker
-                selected={endDate}
-                onChange={(date: any) => setEndDate(date)}
-                selectsEnd
-                startDate={startDate}
-                endDate={endDate}
-                minDate={startDate}
-            />
-
-            <ReservationsList
-                isLoaded={isLoaded}
-                scheduleData={scheduleData}
-                aircraftData={aircraftData}
-                aircraftList={aircraftList}
-            />
+                <ReservationsList
+                    isLoaded={isLoaded}
+                    scheduleData={scheduleData}
+                    aircraftData={aircraftData}
+                    aircraftList={aircraftList}
+                    setStartDate={setStartDate}
+                    setEndDate={setEndDate}
+                />
+            </FadeIn>
         </div>
     );
 };

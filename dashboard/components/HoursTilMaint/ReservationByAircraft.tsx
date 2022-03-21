@@ -1,5 +1,6 @@
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 import ReservationIndividual from './ReservationIndividual';
+import FadeIn from 'react-fade-in/lib/FadeIn';
 
 interface Props {
     scheduleData: any;
@@ -45,7 +46,7 @@ const ReservationByAircraft = ({
     }
 
     return (
-        <>
+        <FadeIn>
             <h2>{aircraftTailNum}</h2>
             <h3>{filteredData.length} reservations</h3>
             {filteredData.map((schedule: any, i: number) => {
@@ -68,7 +69,7 @@ const ReservationByAircraft = ({
                     </div>
                 );
             })}
-        </>
+        </FadeIn>
     );
 };
 
