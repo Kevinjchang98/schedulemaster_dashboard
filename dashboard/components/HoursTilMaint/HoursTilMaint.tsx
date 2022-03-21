@@ -37,10 +37,11 @@ const HoursTilMaint: NextComponentType = () => {
 
     const getScheduleData = async () => {
         const res = await fetch(
-            'https://schedulemaster-dashboard.herokuapp.com/sample'
+            `https://schedulemaster-dashboard.herokuapp.com/get-schedule-data?username=${process.env.NEXT_PUBLIC_SM_USERNAME}&password=${process.env.NEXT_PUBLIC_SM_PASSWORD}&start=20190101&end=20200101`
         );
 
         await res.json().then((d) => {
+            console.log(d);
             setScheduleData(d.response);
         });
     };
