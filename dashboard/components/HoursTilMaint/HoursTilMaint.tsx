@@ -12,7 +12,6 @@ import HoursLeftStats from './HoursLeftStats';
 import ReservationsList from './ReservationsList';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { start } from 'repl';
 
 const HoursTilMaint: NextComponentType = () => {
     // Referencing https://www.section.io/engineering-education/introduction-to-nextjs-with-typescript-and-firebase-database
