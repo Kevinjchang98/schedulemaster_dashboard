@@ -32,3 +32,19 @@
 .subSectionMain {
     width: 60vw;
 }
+
+.reservationTitle {
+    margin: 0;
+}
+
+.reservationTitle:hover {
+    cursor: pointer;
+}
+
+.reservationIndividualContainer {
+    margin-bottom: 50px;
+}
+
+.reservationDetails {
+    padding-left: 20px;
+}
