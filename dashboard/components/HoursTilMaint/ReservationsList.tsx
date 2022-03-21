@@ -19,7 +19,7 @@ const ReservationsList = ({
             <h1>Scheduled flights</h1>
 
             {!isLoaded ? null : scheduleData.length === 0 ? (
-                <p>No schedules</p>
+                <p>No scheduled flights within selected dates</p>
             ) : (
                 aircraftList.map((d: any, i: number) => (
                     <ReservationByAircraft

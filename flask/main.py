@@ -5,28 +5,42 @@ import urllib.request, json
 app = Flask(__name__)
 CORS(app)
 
-# TODO: Filter response by aircraft here and remove filtering logic from frontend
-@app.route('/get-aircraft-list', methods=['GET'])
-def get_aircraft_list():
-    userName = request.args.get('username')
-    password = request.args.get('password')
-
-    apiKeyUrl = "https://smapi.schedulemaster.com/SMapi.aspx?c=findToken&username="+ userName + "&pwd=" + password
+def get_token(username, password):
+    apiKeyUrl = "https://smapi.schedulemaster.com/SMapi.aspx?c=findToken&username="+ username + "&pwd=" + password
 
     response = urllib.request.urlopen(apiKeyUrl)
     data = response.read()
     dict = json.loads(data)
 
-    apiKey = dict["response"]["accounts"][0]["token"]
+    return dict["response"]["accounts"][0]["token"]
 
-    aircraftListUrl = "https://smapi.schedulemaster.com/SMapi.aspx?c=getentity&t=" + apiKey + "&entity=res&entity_id=0"
-
-    response = urllib.request.urlopen(aircraftListUrl)
+def get_data(url):
+    response = urllib.request.urlopen(url)
     data = response.read()
     dict = json.loads(data)
 
     return jsonify(dict)
 
+# TODO: Filter response by aircraft here and remove filtering logic from frontend
+@app.route('/get-aircraft-list', methods=['GET'])
+def get_aircraft_list():
+    token = get_token(request.args.get('username'), request.args.get('password'))
+
+    url = "https://smapi.schedulemaster.com/SMapi.aspx?c=getentity&t=" + token+ "&entity=res&entity_id=0"
+
+    return get_data(url)
+
+@app.route('/get-schedule-data', methods=['GET'])
+def get_schedule_data():
+    token = get_token(request.args.get('username'), request.args.get('password'))
+
+    print(token)
+
+    url = "https://smapi.schedulemaster.com/SMapi.aspx?c=schlist&t=" + token + "&res_list=CATEGORY->AIRPLANE,&st_date=" + request.args.get('start') + "&en_date="+ request.args.get('end') + "&uid=0&purge=F"
+
+    print(url)
+
+    return get_data(url)
 
 
 @app.route('/sample', methods=['GET'])
