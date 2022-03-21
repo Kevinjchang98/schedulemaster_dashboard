@@ -37,6 +37,7 @@ const ReservationIndividual = ({
 
             {isExpanded ? (
                 <>
+                    <p>{startTime.toDateString()}</p>
                     <p>{startTime.toTimeString()}</p>
                     <p>{endTime.toTimeString()}</p>
                     <p>Flight length: {length.toFixed(1)} hours</p>
@@ -50,7 +51,10 @@ const ReservationIndividual = ({
                     </p>
                 </>
             ) : (
-                <p>{startTime.toTimeString()}</p>
+                <>
+                    <p>{startTime.toDateString()}</p>
+                    <p>{startTime.toTimeString()}</p>
+                </>
             )}
         </div>
     );

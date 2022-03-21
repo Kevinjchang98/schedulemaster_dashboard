@@ -10,14 +10,21 @@ import { useEffect, useState } from 'react';
 import { firestore } from '../../firestore/clientApp';
 import HoursLeftStats from './HoursLeftStats';
 import ReservationsList from './ReservationsList';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { start } from 'repl';
 
 const HoursTilMaint: NextComponentType = () => {
     // Referencing https://www.section.io/engineering-education/introduction-to-nextjs-with-typescript-and-firebase-database
+
+    // TODO: Init startDate to be start of today and endDate to be start of tomorrow
+    const [startDate, setStartDate] = useState<Date>(new Date());
+    const [endDate, setEndDate] = useState<Date>(new Date());
+    const [scheduleData, setScheduleData] = useState<Array<{}>>([]);
+    const [aircraftList, setAircraftList] = useState<Array<{}>>([]);
     const [aircraftData, setAircraftData] = useState<
         QueryDocumentSnapshot<DocumentData>[]
     >([]);
-    const [scheduleData, setScheduleData] = useState<Array<{}>>([]);
-    const [aircraftList, setAircraftList] = useState<Array<{}>>([]);
 
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
@@ -36,12 +43,23 @@ const HoursTilMaint: NextComponentType = () => {
     };
 
     const getScheduleData = async () => {
+        // Dates for url need to be formatted as YYYYMMDD
+        // TODO: Confirm UTC timezone for date format
         const res = await fetch(
-            `https://schedulemaster-dashboard.herokuapp.com/get-schedule-data?username=${process.env.NEXT_PUBLIC_SM_USERNAME}&password=${process.env.NEXT_PUBLIC_SM_PASSWORD}&start=20190101&end=20200101`
+            `https://schedulemaster-dashboard.herokuapp.com/get-schedule-data?username=${
+                process.env.NEXT_PUBLIC_SM_USERNAME
+            }&password=${process.env.NEXT_PUBLIC_SM_PASSWORD}&start=${startDate
+                .toISOString()
+                .split('T')[0]
+                .replace('-', '')
+                .replace('-', '')}&end=${endDate
+                .toISOString()
+                .split('T')[0]
+                .replace('-', '')
+                .replace('-', '')}`
         );
 
         await res.json().then((d) => {
-            console.log(d);
             setScheduleData(d.response);
         });
     };
@@ -65,12 +83,6 @@ const HoursTilMaint: NextComponentType = () => {
         );
 
         await res.json().then((d) => {
-            console.log(
-                d.response.filter((d: any) => {
-                    return d.CATEGORY === 'AIRPLANE';
-                })
-            );
-
             setAircraftList(
                 d.response.filter((d: any) => {
                     return d.CATEGORY === 'AIRPLANE';
@@ -81,11 +93,30 @@ const HoursTilMaint: NextComponentType = () => {
 
     useEffect(() => {
         runQueries();
-    }, []);
+    }, [startDate, endDate]);
 
     return (
         <div>
             <HoursLeftStats isLoaded={isLoaded} aircraftData={aircraftData} />
+
+            <h1>Filter</h1>
+            <p>Start Date:</p>
+            <DatePicker
+                selected={startDate}
+                onChange={(date: any) => setStartDate(date)}
+                selectsStart
+                startDate={startDate}
+                endDate={endDate}
+            />
+            <p>End Date:</p>
+            <DatePicker
+                selected={endDate}
+                onChange={(date: any) => setEndDate(date)}
+                selectsEnd
+                startDate={startDate}
+                endDate={endDate}
+                minDate={startDate}
+            />
 
             <ReservationsList
                 isLoaded={isLoaded}
