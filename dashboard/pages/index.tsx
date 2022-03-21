@@ -15,10 +15,6 @@ const Home: NextPage = () => {
 
                 {/* TODO: Change icon */}
                 <link rel="icon" href="/favicon.ico" />
-                <style>
-                    @import
-                    url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200;400&display=swap");
-                </style>
             </Head>
 
             <main className={styles.main}>
