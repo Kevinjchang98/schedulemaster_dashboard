@@ -21,8 +21,9 @@ const ReservationsList = ({
             {!isLoaded ? null : scheduleData.length === 0 ? (
                 <p>No schedules</p>
             ) : (
-                aircraftList.map((d: any) => (
+                aircraftList.map((d: any, i: number) => (
                     <ReservationItem
+                        key={i}
                         scheduleData={scheduleData}
                         aircraftData={aircraftData}
                         aircraftTailNum={d.N_NO}
