@@ -61,7 +61,6 @@ const ReservationByAircraft = ({
                         <ReservationIndividual
                             i={i}
                             hoursLeft={hoursLeft[i]}
-                            tailNum={schedule.N_NO}
                             name={schedule.NAME}
                             startTime={startTime}
                             endTime={endTime}

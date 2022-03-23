@@ -5,7 +5,6 @@ import FadeIn from 'react-fade-in/lib/FadeIn';
 interface Props {
     i: number;
     hoursLeft: number;
-    tailNum: string;
     name: string;
     startTime: Date;
     endTime: Date;
@@ -14,7 +13,6 @@ interface Props {
 const ReservationIndividual = ({
     i,
     hoursLeft,
-    tailNum,
     name,
     startTime,
     endTime,
