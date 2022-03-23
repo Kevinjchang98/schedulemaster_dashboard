@@ -28,6 +28,14 @@
     align-items: flex-start;
 }
 
+.subSectionContentsContainerWrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
 .subSectionSticky {
     position: sticky;
     top: 0;

@@ -77,7 +77,7 @@ const ReservationsList = ({
                     ) : (
                         <FadeIn
                             delay={100}
-                            className={styles.subSectionContentsContainer}
+                            className={styles.subSectionContentsContainerWrap}
                             visible={isLoaded}
                         >
                             {aircraftList.map((d: any, i: number) => (
