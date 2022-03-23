@@ -95,7 +95,7 @@ const HoursTilMaint: NextComponentType = () => {
 
     return (
         <div>
-            <FadeIn>
+            <FadeIn delay={70}>
                 <HoursLeftStats
                     isLoaded={isLoaded}
                     aircraftData={aircraftData}
