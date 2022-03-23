@@ -42,11 +42,16 @@ def get_aircraft_details():
 def get_schedule_data():
     token = get_token(request.args.get('username'), request.args.get('password'))
 
+    if 'specificTailNum' in request.args:
+        specificTailNum = request.args.get('specificTailNum') + ","
+    else:
+        specificTailNum = 'CATEGORY->AIRPLANE,'
+
     print(token)
 
-    url = "https://smapi.schedulemaster.com/SMapi.aspx?c=schlist&t=" + token + "&res_list=CATEGORY->AIRPLANE,&st_date=" + request.args.get('start') + "&en_date="+ request.args.get('end') + "&uid=0&purge=F"
+    url = "https://smapi.schedulemaster.com/SMapi.aspx?c=schlist&t=" + token + "&res_list=" + specificTailNum + "&st_date=" + request.args.get('start') + "&en_date="+ request.args.get('end') + "&uid=0&purge=F"
 
-    print(url)
+    print("-------" + url)
 
     return get_data(url)
 
