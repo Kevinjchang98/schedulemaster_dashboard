@@ -13,9 +13,19 @@ const HoursLeftStats = ({ isLoaded, aircraftData }: Props) => {
         <div className={styles.container}>
             <div className={styles.sectionNumber}>01</div>
             <h1 className={styles.subSectionTitle}>Aircraft</h1>
-            <FadeIn delay={70} className={styles.subSectionContentsContainer}>
+            <FadeIn
+                delay={70}
+                className={styles.subSectionContentsContainer}
+                visible={isLoaded}
+            >
                 {!isLoaded ? (
-                    <p>Loading</p>
+                    // Following contents to achieve same height as if elements were already loaded; could be simplified with an empty div with min-height probably
+                    <div>
+                        <div className={styles.aircraftDetailsLink}>
+                            <h3>Loading</h3>
+                            <p>...</p>
+                        </div>
+                    </div>
                 ) : aircraftData.length == 0 ? (
                     <div>No aircraft data available</div>
                 ) : (
