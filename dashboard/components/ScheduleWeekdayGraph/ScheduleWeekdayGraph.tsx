@@ -3,7 +3,7 @@ import styles from '../../styles/BarChart.module.css';
 
 interface Props {
     scheduleData: Array<Object>;
-    subSectionNumber: number;
+    subSectionNumber: number | string;
 }
 
 const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {

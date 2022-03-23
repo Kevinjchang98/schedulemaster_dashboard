@@ -123,7 +123,7 @@ const Home: NextPage = () => {
                     />
 
                     <ScheduleWeekDayGraph
-                        subSectionNumber={3}
+                        subSectionNumber={'03'}
                         scheduleData={scheduleData}
                     />
                 </FadeIn>
