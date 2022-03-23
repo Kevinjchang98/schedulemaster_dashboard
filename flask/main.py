@@ -30,6 +30,14 @@ def get_aircraft_list():
 
     return get_data(url)
 
+@app.route('/get-aircraft-details', methods=['GET'])
+def get_aircraft_details():
+    token = get_token(request.args.get('username'), request.args.get('password'))
+
+    url = "https://smapi.schedulemaster.com/SMapi.aspx?c=getentity&t=" + token + "&entity=res&entity_id=NNO:" + request.args.get('n_no')
+
+    return get_data(url)
+
 @app.route('/get-schedule-data', methods=['GET'])
 def get_schedule_data():
     token = get_token(request.args.get('username'), request.args.get('password'))

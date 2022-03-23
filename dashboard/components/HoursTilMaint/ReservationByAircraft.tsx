@@ -1,5 +1,6 @@
 import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
 import ReservationIndividual from './ReservationIndividual';
+import FadeIn from 'react-fade-in/lib/FadeIn';
 
 interface Props {
     scheduleData: any;
@@ -44,23 +45,31 @@ const ReservationByAircraft = ({
         }
     }
 
-    return filteredData.map((schedule: any, i: number) => {
-        let startTime = new Date(schedule.sch_start);
-        let endTime = new Date(schedule.sch_end);
+    return (
+        <FadeIn>
+            <h2>{aircraftTailNum}</h2>
+            <h3>{filteredData.length} reservations</h3>
+            {filteredData.map((schedule: any, i: number) => {
+                let startTime = new Date(schedule.sch_start);
+                let endTime = new Date(schedule.sch_end);
 
-        return (
-            <div key={i} style={hoursLeft[i] < 0 ? { color: 'red' } : {}}>
-                <ReservationIndividual
-                    i={i}
-                    hoursLeft={hoursLeft[i]}
-                    tailNum={schedule.N_NO}
-                    name={schedule.NAME}
-                    startTime={startTime}
-                    endTime={endTime}
-                />
-            </div>
-        );
-    });
+                return (
+                    <div
+                        key={i}
+                        style={hoursLeft[i] < 0 ? { color: 'red' } : {}}
+                    >
+                        <ReservationIndividual
+                            i={i}
+                            hoursLeft={hoursLeft[i]}
+                            name={schedule.NAME}
+                            startTime={startTime}
+                            endTime={endTime}
+                        />
+                    </div>
+                );
+            })}
+        </FadeIn>
+    );
 };
 
 export default ReservationByAircraft;
