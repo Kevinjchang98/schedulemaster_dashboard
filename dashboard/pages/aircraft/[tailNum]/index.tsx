@@ -79,8 +79,11 @@ const Aircraft: NextPage = () => {
                                 by Sport pilots
                             </p>
                         </FadeIn>
-                        <FadeIn className={styles.container}>
-                            <ScheduleWeekDayGraph scheduleData={scheduleData} />
+                        <FadeIn>
+                            <ScheduleWeekDayGraph
+                                subSectionNumber={2}
+                                scheduleData={scheduleData}
+                            />
                         </FadeIn>
                     </>
                 )}

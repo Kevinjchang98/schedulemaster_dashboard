@@ -13,6 +13,7 @@ import { firestore } from '../firestore/clientApp';
 import HoursLeftStats from '../components/HoursTilMaint/HoursLeftStats';
 import ReservationsList from '../components/HoursTilMaint/ReservationsList';
 import FadeIn from 'react-fade-in/lib/FadeIn';
+import ScheduleWeekDayGraph from '../components/ScheduleWeekdayGraph/ScheduleWeekdayGraph';
 
 const Home: NextPage = () => {
     const [startDate, setStartDate] = useState<Date>(new Date());
@@ -119,6 +120,11 @@ const Home: NextPage = () => {
                         aircraftList={aircraftList}
                         setStartDate={setStartDate}
                         setEndDate={setEndDate}
+                    />
+
+                    <ScheduleWeekDayGraph
+                        subSectionNumber={3}
+                        scheduleData={scheduleData}
                     />
                 </FadeIn>
             </main>

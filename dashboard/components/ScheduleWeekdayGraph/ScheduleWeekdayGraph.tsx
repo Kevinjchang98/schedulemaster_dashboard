@@ -3,12 +3,13 @@ import styles from '../../styles/BarChart.module.css';
 
 interface Props {
     scheduleData: Array<Object>;
+    subSectionNumber: number;
 }
 
-const ScheduleWeekDayGraph = ({ scheduleData }: Props) => {
+const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {
     const width = 800;
     const height = 400;
-    const margin = { top: 30, right: 30, bottom: 30, left: 30 };
+    const margin = { top: 30, right: 30, bottom: 30, left: 40 };
     const innerWidth: number = width - margin.right - margin.left;
     const innerHeight: number = height - margin.top - margin.bottom;
 
@@ -49,7 +50,7 @@ const ScheduleWeekDayGraph = ({ scheduleData }: Props) => {
                     key={tickValue + 'text'}
                     style={{ textAnchor: 'end' }}
                     dy={'0.32em'}
-                    x={'0'}
+                    x={'-10'}
                     y={innerHeight + 3}
                 >
                     {tickValue}
@@ -81,17 +82,20 @@ const ScheduleWeekDayGraph = ({ scheduleData }: Props) => {
     ));
 
     return (
-        <div>
-            <h1>Flights per weekday</h1>
-            <svg height={height} width={width}>
-                <g transform={`translate(${margin.left}, ${margin.top})`}>
-                    {yScale}
-                    {xScale}
-                    {xScaleMarks}
-                    {yScaleMarks}
-                    {bars}
-                </g>
-            </svg>
+        <div className={styles.container}>
+            <div className={styles.sectionNumber}>{subSectionNumber}</div>
+            <h1 className={styles.subSectionTitle}>Flights per weekday</h1>
+            {maxFreq === 0 ? null : (
+                <svg height={height} width={width}>
+                    <g transform={`translate(${margin.left}, ${margin.top})`}>
+                        {yScale}
+                        {xScale}
+                        {xScaleMarks}
+                        {yScaleMarks}
+                        {bars}
+                    </g>
+                </svg>
+            )}
         </div>
     );
 };
