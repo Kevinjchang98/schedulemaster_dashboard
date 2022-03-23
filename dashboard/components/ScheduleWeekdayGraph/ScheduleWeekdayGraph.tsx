@@ -44,8 +44,8 @@ const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {
 
     const yScaleMarks = yScale
         .ticks(maxFreq < 10 ? maxFreq : null)
-        .map((tickValue: number) => (
-            <g transform={`translate(0, ${-yScale(tickValue)})`}>
+        .map((tickValue: number, i: number) => (
+            <g transform={`translate(0, ${-yScale(tickValue)})`} key={i}>
                 <text
                     key={tickValue + 'text'}
                     style={{ textAnchor: 'end' }}
@@ -58,8 +58,8 @@ const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {
             </g>
         ));
 
-    const xScaleMarks = xScale.domain().map((tickValue: number) => (
-        <g>
+    const xScaleMarks = xScale.domain().map((tickValue: number, i: number) => (
+        <g key={i}>
             <text
                 style={{ textAnchor: 'middle' }}
                 dy={'0.71em'}
@@ -73,6 +73,7 @@ const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {
 
     const bars = freq.map((d: any, i: any) => (
         <rect
+            key={i}
             x={xScale(weekdays[i])}
             y={innerHeight - yScale(d)}
             width={xScale.bandwidth()}
@@ -88,8 +89,6 @@ const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {
             {maxFreq === 0 ? null : (
                 <svg height={height} width={width}>
                     <g transform={`translate(${margin.left}, ${margin.top})`}>
-                        {yScale}
-                        {xScale}
                         {xScaleMarks}
                         {yScaleMarks}
                         {bars}
