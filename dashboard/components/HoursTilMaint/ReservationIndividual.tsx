@@ -17,12 +17,18 @@ const ReservationIndividual = ({
     startTime,
     endTime,
 }: Props) => {
-    const [isExpanded, setIsExpanded] = useState<Boolean>(false);
+    // isExpanded for height collapsing, isVisible for <FadeIn> animations
+    const [isExpanded, setIsExpanded] = useState<boolean>(false);
+    const [isVisible, setIsVisible] = useState<boolean>(false);
     const length =
         Math.abs(endTime.getTime() - startTime.getTime()) / (60 * 60 * 1000);
 
     const expand = () => {
-        setIsExpanded(!isExpanded);
+        if (!isExpanded) {
+            setIsExpanded(true);
+        }
+
+        setIsVisible(!isVisible);
     };
 
     return (
@@ -41,7 +47,16 @@ const ReservationIndividual = ({
             </h3>
             <div className={styles.reservationDetails}>
                 {isExpanded ? (
-                    <FadeIn delay={25} transitionDuration={125}>
+                    <FadeIn
+                        delay={15}
+                        transitionDuration={90}
+                        onComplete={() => {
+                            if (!isVisible) {
+                                setIsExpanded(false);
+                            }
+                        }}
+                        visible={isVisible}
+                    >
                         <p>{startTime.toDateString()}</p>
                         <p>{startTime.toTimeString()}</p>
                         <p>{endTime.toTimeString()}</p>
