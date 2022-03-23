@@ -54,7 +54,9 @@
 }
 
 .reservationIndividualContainer {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+    min-width: 340px;
+    padding-left: 20px;
 }
 
 .reservationDetails {

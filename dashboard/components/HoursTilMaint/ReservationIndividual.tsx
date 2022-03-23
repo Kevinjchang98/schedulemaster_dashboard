@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from '../../styles/HoursTilMaint.module.css';
+import FadeIn from 'react-fade-in/lib/FadeIn';
 
 interface Props {
     i: number;
@@ -38,11 +39,11 @@ const ReservationIndividual = ({
                     expand();
                 }}
             >
-                {tailNum} - {name}
+                {name}
             </h3>
             <div className={styles.reservationDetails}>
                 {isExpanded ? (
-                    <>
+                    <FadeIn delay={25} transitionDuration={125}>
                         <p>{startTime.toDateString()}</p>
                         <p>{startTime.toTimeString()}</p>
                         <p>{endTime.toTimeString()}</p>
@@ -55,13 +56,8 @@ const ReservationIndividual = ({
                             Hours left if flight time is {length.toFixed(1)}{' '}
                             hours: {hoursLeft.toFixed(1)}
                         </p>
-                    </>
-                ) : (
-                    <>
-                        <p>{startTime.toDateString()}</p>
-                        <p>{startTime.toTimeString()}</p>
-                    </>
-                )}
+                    </FadeIn>
+                ) : null}
             </div>
         </div>
     );
