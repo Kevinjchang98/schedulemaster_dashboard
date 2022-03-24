@@ -14,9 +14,6 @@ const CostVsFlightLength = ({
     subSectionNumber,
     timeCaption,
 }: Props) => {
-    console.log('scheduleData', scheduleData);
-    console.log('aircraftList', aircraftList);
-
     const xData = scheduleData.map(
         (schedule: any) =>
             Math.abs(
