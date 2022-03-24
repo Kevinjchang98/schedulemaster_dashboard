@@ -6,3 +6,24 @@
     padding-top: 15px;
     margin-bottom: 60px;
 }
+
+.sectionNumber {
+    font-family: 'Titillium Web', sans-serif;
+    color: rgb(177, 177, 177);
+}
+
+.subSectionTitle {
+    padding-left: 100px;
+    margin: 0px;
+}
+
+.descriptionContentsContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 0px;
+}
+
+.descriptionTextBox {
+    padding-left: 20px;
+}

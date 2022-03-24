@@ -66,6 +66,8 @@ const Aircraft: NextPage = () => {
         runQueries();
     }, [tailNum]);
 
+    console.log(aircraftData);
+
     return (
         <div className={homeStyles.container}>
             <main className={homeStyles.main}>
@@ -73,25 +75,70 @@ const Aircraft: NextPage = () => {
                 {!isLoaded || !aircraftData ? null : (
                     <>
                         <FadeIn className={styles.container}>
-                            <p>
-                                {aircraftData.year_model} {aircraftData.model}
-                            </p>
-                            <p>Class: {aircraftData.class}</p>
-                            <p>Fuel capacity: {aircraftData.FUELCAPACITY}</p>
-                            <p>Horsepower: {aircraftData.HP}</p>
-                            <p>Cost per hour: {aircraftData.costperhour}</p>
-                            <p>
-                                {aircraftData.elig_BasicMed
-                                    ? 'Flyable'
-                                    : 'Not flyable'}{' '}
-                                by BasicMed pilots
-                            </p>
-                            <p>
-                                {aircraftData.elig_SportPilot
-                                    ? 'Flyable'
-                                    : 'Not flyable'}{' '}
-                                by Sport pilots
-                            </p>
+                            <p className={styles.sectionNumber}>01</p>
+                            <h1 className={styles.subSectionTitle}>Overview</h1>
+                            <div
+                                className={styles.descriptionContentsContainer}
+                            >
+                                <div className={styles.descriptionTextBox}>
+                                    <p>
+                                        {aircraftData.elig_BasicMed
+                                            ? 'Flyable'
+                                            : 'Not flyable'}{' '}
+                                        by BasicMed pilots
+                                    </p>
+                                    <p>
+                                        {aircraftData.elig_SportPilot
+                                            ? 'Flyable'
+                                            : 'Not flyable'}{' '}
+                                        by Sport pilots
+                                    </p>
+                                    {aircraftData.solo_req !== '' ? (
+                                        <p>
+                                            Solo requirements:{' '}
+                                            {aircraftData.solo_req}
+                                        </p>
+                                    ) : null}
+                                </div>
+
+                                <div className={styles.descriptionTextBox}>
+                                    <p>
+                                        {aircraftData.year_model}{' '}
+                                        {aircraftData.mfg} {aircraftData.model}
+                                    </p>
+
+                                    <p>Class: {aircraftData.class}</p>
+
+                                    {aircraftData.FUELCAPACITY &&
+                                    aircraftData.FUELCAPACITY !== 0 ? (
+                                        <p>
+                                            Fuel capacity:{' '}
+                                            {aircraftData.FUELCAPACITY}
+                                        </p>
+                                    ) : null}
+
+                                    {aircraftData.HP &&
+                                    aircraftData.HP !== 0 ? (
+                                        <p>Horsepower: {aircraftData.HP}</p>
+                                    ) : null}
+
+                                    {aircraftData.costperhour &&
+                                    aircraftData.costperhour !== 0 ? (
+                                        <p>
+                                            Cost per hour:{' '}
+                                            {aircraftData.costperhour}{' '}
+                                            {aircraftData.wet ? 'wet' : 'dry'}
+                                        </p>
+                                    ) : null}
+
+                                    <p>{aircraftData.seats} seats</p>
+                                    {aircraftData.equip_list !== '' ? (
+                                        <p>
+                                            Equipment: {aircraftData.equip_list}
+                                        </p>
+                                    ) : null}
+                                </div>
+                            </div>
                         </FadeIn>
                         <FadeIn>
                             <ScheduleWeekDayGraph
