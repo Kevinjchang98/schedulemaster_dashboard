@@ -15,15 +15,6 @@ const CostVsFlightLength = ({
     console.log('scheduleData', scheduleData);
     console.log('aircraftList', aircraftList);
 
-    // TODO: Copy and pasted from ReservationByAircraft.tsx
-    // scheduleData.forEach((schedule: any) => {
-    //     schedule.sch_length_hours =
-    //         Math.abs(
-    //             Date.parse(schedule.sch_end) - Date.parse(schedule.sch_start)
-    //         ) /
-    //         (60 * 60 * 1000);
-    // });
-
     const xData = scheduleData.map(
         (schedule: any) =>
             Math.abs(
