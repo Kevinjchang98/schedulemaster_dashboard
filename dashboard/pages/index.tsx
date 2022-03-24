@@ -30,13 +30,17 @@ const Home: NextPage = () => {
     const [aircraftHours, setAircraftHours] = useState<Array<Object>>([]);
 
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
+    const [initialQuery, setInitialQuery] = useState<boolean>(true);
 
     const aircraftCollection = collection(firestore, 'aircraft');
 
-    const runQueries = async () => {
+    const runQueries = async (initialQuery: boolean) => {
         let promises = [];
 
-        promises.push(getAircraftData());
+        if (initialQuery) {
+            promises.push(getAircraftData());
+            setInitialQuery(false);
+        }
         promises.push(getScheduleData());
         promises.push(getAircraftList());
 
@@ -101,8 +105,9 @@ const Home: NextPage = () => {
     };
 
     useEffect(() => {
-        runQueries();
+        runQueries(initialQuery);
     }, [startDate, endDate]);
+
     return (
         <div className={styles.container}>
             <Head>
@@ -122,12 +127,13 @@ const Home: NextPage = () => {
                     <HoursLeftStats
                         isLoaded={isLoaded}
                         aircraftHours={aircraftHours}
+                        setAircraftHours={setAircraftHours}
                     />
 
                     <ReservationsList
                         isLoaded={isLoaded}
                         scheduleData={scheduleData}
-                        aircraftData={aircraftData}
+                        aircraftHours={aircraftHours}
                         aircraftList={aircraftList}
                         setStartDate={setStartDate}
                         setEndDate={setEndDate}

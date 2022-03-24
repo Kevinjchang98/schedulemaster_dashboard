@@ -6,10 +6,14 @@ import styles from '../../styles/HoursTilMaint.module.css';
 interface Props {
     isLoaded: boolean;
     aircraftHours: Array<Object>;
+    setAircraftHours: Function;
 }
 
-const HoursLeftStats = ({ isLoaded, aircraftHours }: Props) => {
-    console.log(aircraftHours);
+const HoursLeftStats = ({
+    isLoaded,
+    aircraftHours,
+    setAircraftHours,
+}: Props) => {
     return (
         <div className={styles.container}>
             <div className={styles.sectionNumber}>01</div>
@@ -20,20 +24,52 @@ const HoursLeftStats = ({ isLoaded, aircraftHours }: Props) => {
                 visible={isLoaded}
             >
                 {!isLoaded ? (
-                    // Following contents to achieve same height as if elements were already loaded; could be simplified with an empty div with min-height probably
                     <div>
                         <div className={styles.aircraftDetailsLink}>
-                            <h3>Loading</h3>
-                            <p>...</p>
+                            <h2>Loading</h2>
+                            <div className={styles.hoursLeftContainer} />
                         </div>
                     </div>
                 ) : aircraftHours.length == 0 ? (
                     <div>No aircraft data available</div>
                 ) : (
                     aircraftHours.map((aircraft: any, i: number) => (
-                        <Link key={i} href={`/aircraft/${aircraft.tailNum}`}>
-                            <div className={styles.aircraftDetailsLink}>
-                                <h3>{aircraft.tailNum}</h3>
+                        <div>
+                            <Link
+                                key={i}
+                                href={`/aircraft/${aircraft.tailNum}`}
+                            >
+                                <div className={styles.aircraftDetailsLink}>
+                                    <h2>{aircraft.tailNum}</h2>
+                                </div>
+                            </Link>
+                            <div className={styles.hoursLeftContainer}>
+                                <input
+                                    type="number"
+                                    onChange={(event) => {
+                                        setAircraftHours(
+                                            aircraftHours.map((item: any) =>
+                                                item.tailNum ===
+                                                aircraft.tailNum
+                                                    ? {
+                                                          ...item,
+                                                          hoursLeft:
+                                                              event.target
+                                                                  .value,
+                                                      }
+                                                    : item
+                                            )
+                                        );
+                                    }}
+                                    step={0.1}
+                                    value={aircraft.hoursLeft}
+                                    className={styles.hoursLeftInput}
+                                    style={
+                                        aircraft.hoursLeft < 10
+                                            ? { color: 'red' }
+                                            : {}
+                                    }
+                                />
                                 <p
                                     style={
                                         aircraft.hoursLeft < 10
@@ -41,10 +77,10 @@ const HoursLeftStats = ({ isLoaded, aircraftHours }: Props) => {
                                             : {}
                                     }
                                 >
-                                    {aircraft.hoursLeft} hours left
+                                    hours left
                                 </p>
                             </div>
-                        </Link>
+                        </div>
                     ))
                 )}
             </FadeIn>
