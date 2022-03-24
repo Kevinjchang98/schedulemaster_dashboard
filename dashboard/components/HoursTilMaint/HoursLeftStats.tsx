@@ -25,8 +25,10 @@ const HoursLeftStats = ({
             >
                 {!isLoaded ? (
                     <div>
+                        {/* TODO: section still resizes when transition from pre-load to post-load state */}
                         <div className={styles.aircraftDetailsLink}>
                             <h2>Loading</h2>
+                            <p> </p>
                             <div className={styles.hoursLeftContainer} />
                         </div>
                     </div>
@@ -38,8 +40,12 @@ const HoursLeftStats = ({
                             <Link href={`/aircraft/${aircraft.tailNum}`}>
                                 <div className={styles.aircraftDetailsLink}>
                                     <h2>{aircraft.tailNum}</h2>
+                                    <p className={styles.viewDetailsLink}>
+                                        View details
+                                    </p>
                                 </div>
                             </Link>
+
                             <div className={styles.hoursLeftContainer}>
                                 <input
                                     type="number"
@@ -67,6 +73,7 @@ const HoursLeftStats = ({
                                             : {}
                                     }
                                 />
+
                                 <p
                                     style={
                                         aircraft.hoursLeft < 10
