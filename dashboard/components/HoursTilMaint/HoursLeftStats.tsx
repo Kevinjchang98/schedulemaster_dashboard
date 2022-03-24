@@ -34,11 +34,8 @@ const HoursLeftStats = ({
                     <div>No aircraft data available</div>
                 ) : (
                     aircraftHours.map((aircraft: any, i: number) => (
-                        <div>
-                            <Link
-                                key={i}
-                                href={`/aircraft/${aircraft.tailNum}`}
-                            >
+                        <div key={i}>
+                            <Link href={`/aircraft/${aircraft.tailNum}`}>
                                 <div className={styles.aircraftDetailsLink}>
                                     <h2>{aircraft.tailNum}</h2>
                                 </div>
