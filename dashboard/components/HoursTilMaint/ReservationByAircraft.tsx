@@ -4,13 +4,13 @@ import FadeIn from 'react-fade-in/lib/FadeIn';
 
 interface Props {
     scheduleData: any;
-    aircraftData: QueryDocumentSnapshot<DocumentData>[];
+    aircraftHours: Array<any>;
     aircraftTailNum: string;
 }
 
 const ReservationByAircraft = ({
     scheduleData,
-    aircraftData,
+    aircraftHours,
     aircraftTailNum,
 }: Props) => {
     // Filter scheduleData to only have aircraftTailNum's schedules
@@ -33,11 +33,10 @@ const ReservationByAircraft = ({
     // Populate hoursLeft array
     for (let i = 0; i < filteredData.length; i++) {
         if (i == 0) {
-            aircraftData.forEach((aircraft) => {
-                if (aircraft.data().tail_num === aircraftTailNum) {
+            aircraftHours.forEach((aircraft) => {
+                if (aircraft.tailNum === aircraftTailNum) {
                     hoursLeft[0] =
-                        aircraft.data().hours_remaining -
-                        filteredData[0].sch_length_hours;
+                        aircraft.hoursLeft - filteredData[0].sch_length_hours;
                 }
             });
         } else {

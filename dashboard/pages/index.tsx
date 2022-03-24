@@ -14,26 +14,33 @@ import HoursLeftStats from '../components/HoursTilMaint/HoursLeftStats';
 import ReservationsList from '../components/HoursTilMaint/ReservationsList';
 import FadeIn from 'react-fade-in/lib/FadeIn';
 import ScheduleWeekDayGraph from '../components/ScheduleWeekdayGraph/ScheduleWeekdayGraph';
-import ScatterPlot from '../components/ScatterPlot/ScatterPlot';
 import CostVsFlightLength from '../components/CostVsFlightLength';
 
 const Home: NextPage = () => {
     const [startDate, setStartDate] = useState<Date>(new Date());
-    const [endDate, setEndDate] = useState<Date>(new Date());
+    const [endDate, setEndDate] = useState<Date>(
+        new Date(new Date().setDate(new Date().getDate() + 7))
+    );
     const [scheduleData, setScheduleData] = useState<Array<{}>>([]);
     const [aircraftList, setAircraftList] = useState<Array<{}>>([]);
     const [aircraftData, setAircraftData] = useState<
         QueryDocumentSnapshot<DocumentData>[]
     >([]);
 
+    const [aircraftHours, setAircraftHours] = useState<Array<Object>>([]);
+
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
+    const [initialQuery, setInitialQuery] = useState<boolean>(true);
 
     const aircraftCollection = collection(firestore, 'aircraft');
 
-    const runQueries = async () => {
+    const runQueries = async (initialQuery: boolean) => {
         let promises = [];
 
-        promises.push(getAircraftData());
+        if (initialQuery) {
+            promises.push(getAircraftData());
+            setInitialQuery(false);
+        }
         promises.push(getScheduleData());
         promises.push(getAircraftList());
 
@@ -75,6 +82,12 @@ const Home: NextPage = () => {
         });
 
         setAircraftData(result);
+        setAircraftHours(
+            result.map((aircraft) => ({
+                tailNum: aircraft.data().tail_num,
+                hoursLeft: aircraft.data().hours_remaining,
+            }))
+        );
     };
 
     const getAircraftList = async () => {
@@ -92,8 +105,9 @@ const Home: NextPage = () => {
     };
 
     useEffect(() => {
-        runQueries();
+        runQueries(initialQuery);
     }, [startDate, endDate]);
+
     return (
         <div className={styles.container}>
             <Head>
@@ -109,27 +123,29 @@ const Home: NextPage = () => {
 
             <main className={styles.main}>
                 <h1 className={styles.title}>Schedulemaster Dashboard</h1>
-                <FadeIn delay={70}>
+                <FadeIn delay={100}>
                     <HoursLeftStats
                         isLoaded={isLoaded}
-                        aircraftData={aircraftData}
+                        aircraftHours={aircraftHours}
+                        setAircraftHours={setAircraftHours}
                     />
 
                     <ReservationsList
                         isLoaded={isLoaded}
                         scheduleData={scheduleData}
-                        aircraftData={aircraftData}
+                        aircraftHours={aircraftHours}
                         aircraftList={aircraftList}
                         setStartDate={setStartDate}
                         setEndDate={setEndDate}
                     />
 
                     <ScheduleWeekDayGraph
+                        timeCaption={`from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`}
                         subSectionNumber={'03'}
                         scheduleData={scheduleData}
                     />
-
                     <CostVsFlightLength
+                        timeCaption={`from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`}
                         subSectionNumber={'04'}
                         scheduleData={scheduleData}
                         aircraftList={aircraftList}

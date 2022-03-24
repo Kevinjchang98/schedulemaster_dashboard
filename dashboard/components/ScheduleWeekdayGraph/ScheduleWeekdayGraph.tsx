@@ -1,19 +1,35 @@
 import { max, scaleBand, scaleLinear } from 'd3';
+import { useEffect, useRef, useState } from 'react';
+import useResizeObserver from '../../hooks/useResizeObserver';
 import styles from '../../styles/BarChart.module.css';
 
 interface Props {
     scheduleData: Array<Object>;
     subSectionNumber: number | string;
+    timeCaption: string | null;
 }
 
-const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {
-    const width = 800;
-    const height = 400;
+const ScheduleWeekDayGraph = ({
+    scheduleData,
+    subSectionNumber,
+    timeCaption,
+}: Props) => {
+    const [width, setWidth] = useState(800);
+    const [height, setHeight] = useState(400);
     const margin = { top: 30, right: 30, bottom: 30, left: 40 };
     const innerWidth = width - margin.right - margin.left;
     const innerHeight = height - margin.top - margin.bottom;
 
     const freq = [0, 0, 0, 0, 0, 0, 0];
+
+    const graphRef: any = useRef();
+    const dimensions: any = useResizeObserver(graphRef);
+
+    useEffect(() => {
+        if (dimensions) {
+            setWidth(dimensions.width);
+        }
+    }, [dimensions]);
 
     scheduleData.forEach((schedule: any) => {
         const date = new Date(Date.parse(schedule.sch_start));
@@ -71,6 +87,20 @@ const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {
         </g>
     ));
 
+    const xAxisLine = (
+        <line
+            x1={0}
+            x2={innerWidth}
+            y1={innerHeight}
+            y2={innerHeight}
+            stroke="gray"
+        />
+    );
+
+    const yAxisLine = (
+        <line x1={0} x2={0} y1={0} y2={innerHeight + 10} stroke="gray" />
+    );
+
     const bars = freq.map((d: any, i: any) => (
         <rect
             key={i}
@@ -85,16 +115,23 @@ const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {
     return (
         <div className={styles.container}>
             <div className={styles.sectionNumber}>{subSectionNumber}</div>
-            <h1 className={styles.subSectionTitle}>Flights per weekday</h1>
-            {maxFreq === 0 ? null : (
-                <svg height={height} width={width}>
-                    <g transform={`translate(${margin.left}, ${margin.top})`}>
-                        {xScaleMarks}
-                        {yScaleMarks}
-                        {bars}
-                    </g>
-                </svg>
-            )}
+            <h1 className={styles.subSectionTitle}>Flights per Weekday</h1>
+            <h2 className={styles.subSectionTitle}>{timeCaption}</h2>
+            <div ref={graphRef}>
+                {maxFreq === 0 ? null : (
+                    <svg height={height} width={width}>
+                        <g
+                            transform={`translate(${margin.left}, ${margin.top})`}
+                        >
+                            {xScaleMarks}
+                            {xAxisLine}
+                            {yAxisLine}
+                            {yScaleMarks}
+                            {bars}
+                        </g>
+                    </svg>
+                )}
+            </div>
         </div>
     );
 };

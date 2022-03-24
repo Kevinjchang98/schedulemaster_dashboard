@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 interface Props {
     isLoaded: boolean;
     scheduleData: Array<{}>;
-    aircraftData: QueryDocumentSnapshot<DocumentData>[];
+    aircraftHours: Array<Object>;
     aircraftList: Array<{}>;
     setStartDate: Function;
     setEndDate: Function;
@@ -18,7 +18,7 @@ interface Props {
 const ReservationsList = ({
     isLoaded,
     scheduleData,
-    aircraftData,
+    aircraftHours,
     aircraftList,
     setStartDate,
     setEndDate,
@@ -86,7 +86,7 @@ const ReservationsList = ({
                                 <ReservationByAircraft
                                     key={i}
                                     scheduleData={scheduleData}
-                                    aircraftData={aircraftData}
+                                    aircraftHours={aircraftHours}
                                     aircraftTailNum={d.N_NO}
                                 />
                             ))}

@@ -5,10 +5,15 @@ import styles from '../../styles/HoursTilMaint.module.css';
 
 interface Props {
     isLoaded: boolean;
-    aircraftData: QueryDocumentSnapshot<DocumentData>[];
+    aircraftHours: Array<Object>;
+    setAircraftHours: Function;
 }
 
-const HoursLeftStats = ({ isLoaded, aircraftData }: Props) => {
+const HoursLeftStats = ({
+    isLoaded,
+    aircraftHours,
+    setAircraftHours,
+}: Props) => {
     return (
         <div className={styles.container}>
             <div className={styles.sectionNumber}>01</div>
@@ -19,34 +24,67 @@ const HoursLeftStats = ({ isLoaded, aircraftData }: Props) => {
                 visible={isLoaded}
             >
                 {!isLoaded ? (
-                    // Following contents to achieve same height as if elements were already loaded; could be simplified with an empty div with min-height probably
                     <div>
+                        {/* TODO: section still resizes when transition from pre-load to post-load state */}
                         <div className={styles.aircraftDetailsLink}>
-                            <h3>Loading</h3>
-                            <p>...</p>
+                            <h2>Loading</h2>
+                            <p> </p>
+                            <div className={styles.hoursLeftContainer} />
                         </div>
                     </div>
-                ) : aircraftData.length == 0 ? (
+                ) : aircraftHours.length == 0 ? (
                     <div>No aircraft data available</div>
                 ) : (
-                    aircraftData.map((aircraft: any, i: number) => (
-                        <Link
-                            key={i}
-                            href={`/aircraft/${aircraft.data().tail_num}`}
-                        >
-                            <div className={styles.aircraftDetailsLink}>
-                                <h3>{aircraft.data().tail_num}</h3>
+                    aircraftHours.map((aircraft: any, i: number) => (
+                        <div key={i}>
+                            <Link href={`/aircraft/${aircraft.tailNum}`}>
+                                <div className={styles.aircraftDetailsLink}>
+                                    <h2>{aircraft.tailNum}</h2>
+                                    <p className={styles.viewDetailsLink}>
+                                        View details
+                                    </p>
+                                </div>
+                            </Link>
+
+                            <div className={styles.hoursLeftContainer}>
+                                <input
+                                    type="number"
+                                    onChange={(event) => {
+                                        setAircraftHours(
+                                            aircraftHours.map((item: any) =>
+                                                item.tailNum ===
+                                                aircraft.tailNum
+                                                    ? {
+                                                          ...item,
+                                                          hoursLeft:
+                                                              event.target
+                                                                  .value,
+                                                      }
+                                                    : item
+                                            )
+                                        );
+                                    }}
+                                    step={0.1}
+                                    value={aircraft.hoursLeft}
+                                    className={styles.hoursLeftInput}
+                                    style={
+                                        aircraft.hoursLeft < 10
+                                            ? { color: 'red' }
+                                            : {}
+                                    }
+                                />
+
                                 <p
                                     style={
-                                        aircraft.data().hours_remaining < 10
+                                        aircraft.hoursLeft < 10
                                             ? { color: 'red' }
                                             : {}
                                     }
                                 >
-                                    {aircraft.data().hours_remaining} hours left
+                                    hours left
                                 </p>
                             </div>
-                        </Link>
+                        </div>
                     ))
                 )}
             </FadeIn>
