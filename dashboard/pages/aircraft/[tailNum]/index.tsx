@@ -81,7 +81,7 @@ const Aircraft: NextPage = () => {
                         </FadeIn>
                         <FadeIn>
                             <ScheduleWeekDayGraph
-                                subSectionNumber={2}
+                                subSectionNumber={'02'}
                                 scheduleData={scheduleData}
                             />
                         </FadeIn>

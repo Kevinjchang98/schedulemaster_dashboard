@@ -3,15 +3,15 @@ import styles from '../../styles/BarChart.module.css';
 
 interface Props {
     scheduleData: Array<Object>;
-    subSectionNumber: number;
+    subSectionNumber: number | string;
 }
 
 const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {
     const width = 800;
     const height = 400;
     const margin = { top: 30, right: 30, bottom: 30, left: 40 };
-    const innerWidth: number = width - margin.right - margin.left;
-    const innerHeight: number = height - margin.top - margin.bottom;
+    const innerWidth = width - margin.right - margin.left;
+    const innerHeight = height - margin.top - margin.bottom;
 
     const freq = [0, 0, 0, 0, 0, 0, 0];
 

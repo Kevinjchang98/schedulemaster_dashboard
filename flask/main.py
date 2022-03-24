@@ -47,11 +47,7 @@ def get_schedule_data():
     else:
         specificTailNum = 'CATEGORY->AIRPLANE,'
 
-    print(token)
-
     url = "https://smapi.schedulemaster.com/SMapi.aspx?c=schlist&t=" + token + "&res_list=" + specificTailNum + "&st_date=" + request.args.get('start') + "&en_date="+ request.args.get('end') + "&uid=0&purge=F"
-
-    print("-------" + url)
 
     return get_data(url)
 
