@@ -27,6 +27,8 @@ const Home: NextPage = () => {
         QueryDocumentSnapshot<DocumentData>[]
     >([]);
 
+    const [aircraftHours, setAircraftHours] = useState<Array<Object>>([]);
+
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
     const aircraftCollection = collection(firestore, 'aircraft');
@@ -76,6 +78,12 @@ const Home: NextPage = () => {
         });
 
         setAircraftData(result);
+        setAircraftHours(
+            result.map((aircraft) => ({
+                tailNum: aircraft.data().tail_num,
+                hoursLeft: aircraft.data().hours_remaining,
+            }))
+        );
     };
 
     const getAircraftList = async () => {
@@ -113,7 +121,7 @@ const Home: NextPage = () => {
                 <FadeIn delay={70}>
                     <HoursLeftStats
                         isLoaded={isLoaded}
-                        aircraftData={aircraftData}
+                        aircraftHours={aircraftHours}
                     />
 
                     <ReservationsList
