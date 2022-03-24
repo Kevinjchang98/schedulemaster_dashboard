@@ -1,4 +1,6 @@
 import { max, scaleBand, scaleLinear } from 'd3';
+import { useEffect, useRef, useState } from 'react';
+import useResizeObserver from '../../hooks/useResizeObserver';
 import styles from '../../styles/BarChart.module.css';
 
 interface Props {
@@ -7,13 +9,22 @@ interface Props {
 }
 
 const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {
-    const width = 800;
-    const height = 400;
+    const [width, setWidth] = useState(800);
+    const [height, setHeight] = useState(400);
     const margin = { top: 30, right: 30, bottom: 30, left: 40 };
     const innerWidth = width - margin.right - margin.left;
     const innerHeight = height - margin.top - margin.bottom;
 
     const freq = [0, 0, 0, 0, 0, 0, 0];
+
+    const graphRef: any = useRef();
+    const dimensions: any = useResizeObserver(graphRef);
+
+    useEffect(() => {
+        if (dimensions) {
+            setWidth(dimensions.width);
+        }
+    }, [dimensions]);
 
     scheduleData.forEach((schedule: any) => {
         const date = new Date(Date.parse(schedule.sch_start));
@@ -86,15 +97,20 @@ const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {
         <div className={styles.container}>
             <div className={styles.sectionNumber}>{subSectionNumber}</div>
             <h1 className={styles.subSectionTitle}>Flights per weekday</h1>
-            {maxFreq === 0 ? null : (
-                <svg height={height} width={width}>
-                    <g transform={`translate(${margin.left}, ${margin.top})`}>
-                        {xScaleMarks}
-                        {yScaleMarks}
-                        {bars}
-                    </g>
-                </svg>
-            )}
+            <h2 className={styles.subSectionTitle}>over the past year</h2>
+            <div ref={graphRef}>
+                {maxFreq === 0 ? null : (
+                    <svg height={height} width={width}>
+                        <g
+                            transform={`translate(${margin.left}, ${margin.top})`}
+                        >
+                            {xScaleMarks}
+                            {yScaleMarks}
+                            {bars}
+                        </g>
+                    </svg>
+                )}
+            </div>
         </div>
     );
 };

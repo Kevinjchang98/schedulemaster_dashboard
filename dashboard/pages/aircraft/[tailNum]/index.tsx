@@ -38,8 +38,22 @@ const Aircraft: NextPage = () => {
     };
 
     const getAircraftSchedules = async () => {
+        const startDate = new Date(
+            new Date().setDate(new Date().getDate() - 365)
+        )
+            .toISOString()
+            .split('T')[0]
+            .replace('-', '')
+            .replace('-', '');
+
+        const endDate = new Date()
+            .toISOString()
+            .split('T')[0]
+            .replace('-', '')
+            .replace('-', '');
+
         const res = await fetch(
-            `https://schedulemaster-dashboard.herokuapp.com/get-schedule-data?username=${process.env.NEXT_PUBLIC_SM_USERNAME}&password=${process.env.NEXT_PUBLIC_SM_PASSWORD}&start=20190101&end=20220101&specificTailNum=${tailNum}`
+            `https://schedulemaster-dashboard.herokuapp.com/get-schedule-data?username=${process.env.NEXT_PUBLIC_SM_USERNAME}&password=${process.env.NEXT_PUBLIC_SM_PASSWORD}&start=${startDate}&end=${endDate}&specificTailNum=${tailNum}`
         );
 
         await res.json().then((d) => {

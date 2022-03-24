@@ -1,4 +1,6 @@
 import { extent, scaleBand, scaleLinear } from 'd3';
+import { useEffect, useRef, useState } from 'react';
+import useResizeObserver from '../../hooks/useResizeObserver';
 import styles from '../../styles/BarChart.module.css';
 
 interface Props {
@@ -7,8 +9,8 @@ interface Props {
 }
 
 const ScatterPlot = ({ xData, yData }: Props) => {
-    const width = 800;
-    const height = 600;
+    const [width, setWidth] = useState(800);
+    const [height, setHeight] = useState(400);
     const margin = { top: 30, right: 30, bottom: 30, left: 30 };
     const innerWidth = width - margin.right - margin.left;
     const innerHeight = height - margin.top - margin.bottom;
@@ -18,6 +20,15 @@ const ScatterPlot = ({ xData, yData }: Props) => {
 
     const xScale: any = scaleLinear().domain(extentX).range([0, innerWidth]);
     const yScale: any = scaleLinear().domain(extentY).range([0, innerHeight]);
+
+    const graphRef: any = useRef();
+    const dimensions: any = useResizeObserver(graphRef);
+
+    useEffect(() => {
+        if (dimensions) {
+            setWidth(dimensions.width);
+        }
+    }, [dimensions]);
 
     const xScaleMarks = xScale.ticks().map((tickValue: number, i: number) => (
         <g key={i}>
@@ -52,13 +63,15 @@ const ScatterPlot = ({ xData, yData }: Props) => {
     ));
 
     return (
-        <svg height={height} width={width}>
-            <g transform={`translate(${margin.left}, ${margin.top})`}>
-                {marks}
-                {xScaleMarks}
-                {yScaleMarks}
-            </g>
-        </svg>
+        <div ref={graphRef}>
+            <svg height={height} width={width}>
+                <g transform={`translate(${margin.left}, ${margin.top})`}>
+                    {marks}
+                    {xScaleMarks}
+                    {yScaleMarks}
+                </g>
+            </svg>
+        </div>
     );
 };
 
