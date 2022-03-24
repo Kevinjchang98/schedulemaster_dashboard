@@ -123,7 +123,7 @@ const Home: NextPage = () => {
 
             <main className={styles.main}>
                 <h1 className={styles.title}>Schedulemaster Dashboard</h1>
-                <FadeIn delay={70}>
+                <FadeIn delay={100}>
                     <HoursLeftStats
                         isLoaded={isLoaded}
                         aircraftHours={aircraftHours}
