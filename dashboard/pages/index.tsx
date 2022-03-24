@@ -125,11 +125,12 @@ const Home: NextPage = () => {
                     />
 
                     <ScheduleWeekDayGraph
+                        timeCaption={`from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`}
                         subSectionNumber={'03'}
                         scheduleData={scheduleData}
                     />
-
                     <CostVsFlightLength
+                        timeCaption={`from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`}
                         subSectionNumber={'04'}
                         scheduleData={scheduleData}
                         aircraftList={aircraftList}

@@ -6,9 +6,14 @@ import styles from '../../styles/BarChart.module.css';
 interface Props {
     scheduleData: Array<Object>;
     subSectionNumber: number | string;
+    timeCaption: string | null;
 }
 
-const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {
+const ScheduleWeekDayGraph = ({
+    scheduleData,
+    subSectionNumber,
+    timeCaption,
+}: Props) => {
     const [width, setWidth] = useState(800);
     const [height, setHeight] = useState(400);
     const margin = { top: 30, right: 30, bottom: 30, left: 40 };
@@ -97,7 +102,7 @@ const ScheduleWeekDayGraph = ({ scheduleData, subSectionNumber }: Props) => {
         <div className={styles.container}>
             <div className={styles.sectionNumber}>{subSectionNumber}</div>
             <h1 className={styles.subSectionTitle}>Flights per weekday</h1>
-            <h2 className={styles.subSectionTitle}>over the past year</h2>
+            <h2 className={styles.subSectionTitle}>{timeCaption}</h2>
             <div ref={graphRef}>
                 {maxFreq === 0 ? null : (
                     <svg height={height} width={width}>

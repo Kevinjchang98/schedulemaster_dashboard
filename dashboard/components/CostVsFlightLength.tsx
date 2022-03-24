@@ -5,12 +5,14 @@ interface Props {
     scheduleData: Array<any>;
     aircraftList: Array<any>;
     subSectionNumber: number | string;
+    timeCaption: string | null;
 }
 
 const CostVsFlightLength = ({
     scheduleData,
     aircraftList,
     subSectionNumber,
+    timeCaption,
 }: Props) => {
     console.log('scheduleData', scheduleData);
     console.log('aircraftList', aircraftList);
@@ -35,6 +37,7 @@ const CostVsFlightLength = ({
             <h1 className={styles.subSectionTitle}>
                 Rental Rate vs Flight Length
             </h1>
+            <h2 className={styles.subSectionTitle}>{timeCaption}</h2>
 
             {scheduleData.length > 0 ? (
                 <ScatterPlot xData={xData} yData={yData} />

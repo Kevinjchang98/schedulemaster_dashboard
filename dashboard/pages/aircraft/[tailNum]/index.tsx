@@ -95,6 +95,7 @@ const Aircraft: NextPage = () => {
                         </FadeIn>
                         <FadeIn>
                             <ScheduleWeekDayGraph
+                                timeCaption={'over the past year'}
                                 subSectionNumber={'02'}
                                 scheduleData={scheduleData}
                             />
