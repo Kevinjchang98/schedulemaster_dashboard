@@ -115,7 +115,7 @@ const ScheduleWeekDayGraph = ({
     return (
         <div className={styles.container}>
             <div className={styles.sectionNumber}>{subSectionNumber}</div>
-            <h1 className={styles.subSectionTitle}>Flights per weekday</h1>
+            <h1 className={styles.subSectionTitle}>Flights per Weekday</h1>
             <h2 className={styles.subSectionTitle}>{timeCaption}</h2>
             <div ref={graphRef}>
                 {maxFreq === 0 ? null : (
