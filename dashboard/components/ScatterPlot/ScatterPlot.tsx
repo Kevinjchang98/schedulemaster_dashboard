@@ -9,7 +9,7 @@ interface Props {
 const ScatterPlot = ({ xData, yData }: Props) => {
     const width = 800;
     const height = 600;
-    const margin = { top: 30, right: 30, bottom: 60, left: 30 };
+    const margin = { top: 30, right: 30, bottom: 30, left: 30 };
     const innerWidth = width - margin.right - margin.left;
     const innerHeight = height - margin.top - margin.bottom;
 
