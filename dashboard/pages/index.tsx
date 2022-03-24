@@ -14,7 +14,6 @@ import HoursLeftStats from '../components/HoursTilMaint/HoursLeftStats';
 import ReservationsList from '../components/HoursTilMaint/ReservationsList';
 import FadeIn from 'react-fade-in/lib/FadeIn';
 import ScheduleWeekDayGraph from '../components/ScheduleWeekdayGraph/ScheduleWeekdayGraph';
-import ScatterPlot from '../components/ScatterPlot/ScatterPlot';
 import CostVsFlightLength from '../components/CostVsFlightLength';
 
 const Home: NextPage = () => {
