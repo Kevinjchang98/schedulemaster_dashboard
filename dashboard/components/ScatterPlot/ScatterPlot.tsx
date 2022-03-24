@@ -32,13 +32,6 @@ const ScatterPlot = ({ xData, yData }: Props) => {
 
     const xScaleMarks = xScale.ticks().map((tickValue: number, i: number) => (
         <g key={i}>
-            <line
-                x1={0}
-                x2={innerWidth}
-                y1={innerHeight}
-                y2={innerHeight}
-                stroke="gray"
-            />
             <text
                 style={{ textAnchor: 'middle' }}
                 dy={'0.71em'}
@@ -52,19 +45,24 @@ const ScatterPlot = ({ xData, yData }: Props) => {
 
     const yScaleMarks = yScale.ticks().map((tickValue: number, i: number) => (
         <g key={i} transform={`translate(0, ${yScale(tickValue)})`}>
-            <line
-                x1={0}
-                x2={0}
-                y1={0 - yScale(tickValue)}
-                y2={innerHeight - yScale(tickValue) + 10}
-                stroke="gray"
-            />
             <text style={{ textAnchor: 'end' }} dy={'0.71em'} x={-10} y={-6}>
                 {tickValue}
             </text>
         </g>
     ));
 
+    const xAxisLine = (
+        <line
+            x1={0}
+            x2={innerWidth}
+            y1={innerHeight}
+            y2={innerHeight}
+            stroke="gray"
+        />
+    );
+    const yAxisLine = (
+        <line x1={0} x2={0} y1={0} y2={innerHeight} stroke="gray" />
+    );
     const marks = xData.map((x: number, i: number) => (
         <circle
             cx={xScale(x)}
@@ -82,6 +80,8 @@ const ScatterPlot = ({ xData, yData }: Props) => {
                 <g transform={`translate(${margin.left}, ${margin.top})`}>
                     {xScaleMarks}
                     {yScaleMarks}
+                    {xAxisLine}
+                    {yAxisLine}
                     {marks}
                 </g>
             </svg>

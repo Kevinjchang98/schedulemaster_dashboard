@@ -62,13 +62,6 @@ const ScheduleWeekDayGraph = ({
         .ticks(maxFreq < 10 ? maxFreq : null)
         .map((tickValue: number, i: number) => (
             <g transform={`translate(0, ${-yScale(tickValue)})`} key={i}>
-                <line
-                    x1={0}
-                    x2={0}
-                    y1={0 - yScale(tickValue)}
-                    y2={innerHeight - yScale(tickValue) + 10}
-                    stroke="gray"
-                />
                 <text
                     key={tickValue + 'text'}
                     style={{ textAnchor: 'end' }}
@@ -83,13 +76,6 @@ const ScheduleWeekDayGraph = ({
 
     const xScaleMarks = xScale.domain().map((tickValue: number, i: number) => (
         <g key={i}>
-            <line
-                x1={0}
-                x2={innerWidth}
-                y1={innerHeight}
-                y2={innerHeight}
-                stroke="gray"
-            />
             <text
                 style={{ textAnchor: 'middle' }}
                 dy={'0.71em'}
@@ -100,6 +86,20 @@ const ScheduleWeekDayGraph = ({
             </text>
         </g>
     ));
+
+    const xAxisLine = (
+        <line
+            x1={0}
+            x2={innerWidth}
+            y1={innerHeight}
+            y2={innerHeight}
+            stroke="gray"
+        />
+    );
+
+    const yAxisLine = (
+        <line x1={0} x2={0} y1={0} y2={innerHeight + 10} stroke="gray" />
+    );
 
     const bars = freq.map((d: any, i: any) => (
         <rect
@@ -124,6 +124,8 @@ const ScheduleWeekDayGraph = ({
                             transform={`translate(${margin.left}, ${margin.top})`}
                         >
                             {xScaleMarks}
+                            {xAxisLine}
+                            {yAxisLine}
                             {yScaleMarks}
                             {bars}
                         </g>
