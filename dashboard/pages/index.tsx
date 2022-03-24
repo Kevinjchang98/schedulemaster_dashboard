@@ -19,7 +19,9 @@ import CostVsFlightLength from '../components/CostVsFlightLength';
 
 const Home: NextPage = () => {
     const [startDate, setStartDate] = useState<Date>(new Date());
-    const [endDate, setEndDate] = useState<Date>(new Date());
+    const [endDate, setEndDate] = useState<Date>(
+        new Date(new Date().setDate(new Date().getDate() + 7))
+    );
     const [scheduleData, setScheduleData] = useState<Array<{}>>([]);
     const [aircraftList, setAircraftList] = useState<Array<{}>>([]);
     const [aircraftData, setAircraftData] = useState<
