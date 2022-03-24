@@ -36,7 +36,9 @@ const CostVsFlightLength = ({
                 Rental Rate vs Flight Length
             </h1>
 
-            <ScatterPlot xData={xData} yData={yData} />
+            {scheduleData.length > 0 ? (
+                <ScatterPlot xData={xData} yData={yData} />
+            ) : null}
         </div>
     );
 };

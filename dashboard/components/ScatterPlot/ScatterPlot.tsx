@@ -33,13 +33,8 @@ const ScatterPlot = ({ xData, yData }: Props) => {
     ));
 
     const yScaleMarks = yScale.ticks().map((tickValue: number, i: number) => (
-        <g key={i} transform={`translate(0, ${-yScale(tickValue)})`}>
-            <text
-                style={{ textAnchor: 'end' }}
-                dy={'0.71em'}
-                x={-10}
-                y={innerHeight}
-            >
+        <g key={i} transform={`translate(0, ${yScale(tickValue)})`}>
+            <text style={{ textAnchor: 'end' }} dy={'0.71em'} x={-10} y={-6}>
                 {tickValue}
             </text>
         </g>

@@ -24,7 +24,9 @@ const ReservationsList = ({
     setEndDate,
 }: Props) => {
     const [localStart, setLocalStart] = useState<Date>(new Date());
-    const [localEnd, setLocalEnd] = useState<Date>(new Date());
+    const [localEnd, setLocalEnd] = useState<Date>(
+        new Date(new Date().setDate(new Date().getDate() + 7))
+    );
     const [hide, setHide] = useState<boolean>(!isLoaded);
 
     useEffect(() => {
