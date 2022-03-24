@@ -50,8 +50,9 @@ const ScatterPlot = ({ xData, yData }: Props) => {
             cx={xScale(x)}
             cy={yScale(yData[i])}
             className={styles.mark}
-            r={10}
+            r={5}
             key={i}
+            opacity={0.4}
         ></circle>
     ));
 
