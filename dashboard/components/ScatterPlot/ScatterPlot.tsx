@@ -6,9 +6,11 @@ import styles from '../../styles/BarChart.module.css';
 interface Props {
     xData: Array<any>;
     yData: Array<any>;
+    xAxisLabel: string;
+    yAxisLabel: string;
 }
 
-const ScatterPlot = ({ xData, yData }: Props) => {
+const ScatterPlot = ({ xData, yData, xAxisLabel, yAxisLabel }: Props) => {
     const [width, setWidth] = useState(800);
     const [height, setHeight] = useState(500);
     const margin = { top: 30, right: 30, bottom: 70, left: 60 };
@@ -65,7 +67,7 @@ const ScatterPlot = ({ xData, yData }: Props) => {
                 y={innerHeight + 55}
                 style={{ textAnchor: 'middle' }}
             >
-                Scheduled flight length (hours)
+                {xAxisLabel}
             </text>
         </>
     );
@@ -78,7 +80,7 @@ const ScatterPlot = ({ xData, yData }: Props) => {
                 transform={`rotate(270)`}
                 style={{ textAnchor: 'middle' }}
             >
-                Rental rate (USD per hour)
+                {yAxisLabel}
             </text>
         </>
     );

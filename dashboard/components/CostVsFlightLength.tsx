@@ -37,7 +37,12 @@ const CostVsFlightLength = ({
             <h2 className={styles.subSectionTitle}>{timeCaption}</h2>
 
             {scheduleData.length > 0 ? (
-                <ScatterPlot xData={xData} yData={yData} />
+                <ScatterPlot
+                    xData={xData}
+                    yData={yData}
+                    xAxisLabel={'Scheduled flight length (hours)'}
+                    yAxisLabel={'Rental rate (USD per hour)'}
+                />
             ) : null}
         </div>
     );
