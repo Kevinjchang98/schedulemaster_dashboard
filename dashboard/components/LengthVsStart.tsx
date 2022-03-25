@@ -38,7 +38,7 @@ const LengthVsStart = ({
                     xData={xData}
                     yData={yData}
                     xAxisLabel={'Hour of day'}
-                    yAxisLabel={'Length of scheduled'}
+                    yAxisLabel={'Length of scheduled flight (hours)'}
                 />
             ) : null}
         </div>
