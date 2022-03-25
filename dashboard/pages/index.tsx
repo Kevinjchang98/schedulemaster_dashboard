@@ -155,7 +155,7 @@ const Home: NextPage = () => {
 
                     <LengthVsStart
                         scheduleData={scheduleData}
-                        subSectionNumber={5}
+                        subSectionNumber={'05'}
                         timeCaption={`from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`}
                     />
                 </FadeIn>

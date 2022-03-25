@@ -26,7 +26,7 @@ const LengthVsStart = ({
     );
 
     return (
-        <div>
+        <div className={styles.container}>
             <div className={styles.sectionNumber}>{subSectionNumber}</div>
             <h1 className={styles.subSectionTitle}>
                 Rental Rate vs Flight Length
