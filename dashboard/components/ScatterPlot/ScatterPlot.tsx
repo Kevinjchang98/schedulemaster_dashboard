@@ -1,4 +1,4 @@
-import { extent, scaleBand, scaleLinear } from 'd3';
+import { extent, scaleLinear } from 'd3';
 import { useEffect, useRef, useState } from 'react';
 import useResizeObserver from '../../hooks/useResizeObserver';
 import styles from '../../styles/BarChart.module.css';
