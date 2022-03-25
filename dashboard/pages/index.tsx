@@ -16,6 +16,7 @@ import FadeIn from 'react-fade-in/lib/FadeIn';
 import ScheduleWeekDayGraph from '../components/ScheduleWeekdayGraph/ScheduleWeekdayGraph';
 import CostVsFlightLength from '../components/CostVsFlightLength';
 import Image from 'next/image';
+import LengthVsStart from '../components/LengthVsStart';
 
 const Home: NextPage = () => {
     const [startDate, setStartDate] = useState<Date>(new Date());
@@ -150,6 +151,12 @@ const Home: NextPage = () => {
                         subSectionNumber={'04'}
                         scheduleData={scheduleData}
                         aircraftList={aircraftList}
+                    />
+
+                    <LengthVsStart
+                        scheduleData={scheduleData}
+                        subSectionNumber={5}
+                        timeCaption={`from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`}
                     />
                 </FadeIn>
             </main>
