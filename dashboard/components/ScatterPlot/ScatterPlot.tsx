@@ -11,7 +11,7 @@ interface Props {
 const ScatterPlot = ({ xData, yData }: Props) => {
     const [width, setWidth] = useState(800);
     const [height, setHeight] = useState(400);
-    const margin = { top: 30, right: 30, bottom: 30, left: 30 };
+    const margin = { top: 30, right: 30, bottom: 70, left: 60 };
     const innerWidth = width - margin.right - margin.left;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -52,17 +52,37 @@ const ScatterPlot = ({ xData, yData }: Props) => {
     ));
 
     const xAxisLine = (
-        <line
-            x1={0}
-            x2={innerWidth}
-            y1={innerHeight}
-            y2={innerHeight}
-            stroke="gray"
-        />
+        <>
+            <line
+                x1={0}
+                x2={innerWidth}
+                y1={innerHeight}
+                y2={innerHeight}
+                stroke="gray"
+            />
+            <text
+                x={innerWidth / 2}
+                y={innerHeight + 55}
+                style={{ textAnchor: 'middle' }}
+            >
+                Scheduled flight length (hours)
+            </text>
+        </>
     );
     const yAxisLine = (
-        <line x1={0} x2={0} y1={0} y2={innerHeight + 10} stroke="gray" />
+        <>
+            <line x1={0} x2={0} y1={0} y2={innerHeight + 10} stroke="gray" />
+            <text
+                x={-innerHeight / 2}
+                y={-40}
+                transform={`rotate(270)`}
+                style={{ textAnchor: 'middle' }}
+            >
+                Rental rate (USD per hour)
+            </text>
+        </>
     );
+
     const marks = xData.map((x: number, i: number) => (
         <circle
             cx={xScale(x)}
