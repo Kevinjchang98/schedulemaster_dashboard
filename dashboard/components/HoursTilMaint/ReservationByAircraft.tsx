@@ -47,7 +47,10 @@ const ReservationByAircraft = ({
     return (
         <FadeIn>
             <h2>{aircraftTailNum}</h2>
-            <h3>{filteredData.length} reservations</h3>
+            <h3>
+                {filteredData.length} reservation
+                {filteredData.length !== 1 ? 's' : ''}
+            </h3>
             {filteredData.map((schedule: any, i: number) => {
                 let startTime = new Date(schedule.sch_start);
                 let endTime = new Date(schedule.sch_end);

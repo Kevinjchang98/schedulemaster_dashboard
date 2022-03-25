@@ -3,29 +3,26 @@ import ScatterPlot from './ScatterPlot/ScatterPlot';
 
 interface Props {
     scheduleData: Array<any>;
-    aircraftList: Array<any>;
     subSectionNumber: number | string;
     timeCaption: string | null;
 }
 
-const CostVsFlightLength = ({
+const LengthVsStart = ({
     scheduleData,
-    aircraftList,
     subSectionNumber,
     timeCaption,
 }: Props) => {
-    const xData = scheduleData.map(
+    const xData = scheduleData.map((schedule: any) => {
+        let date = new Date(schedule.sch_start);
+        return date.getHours() + date.getMinutes() / 60;
+    });
+
+    const yData = scheduleData.map(
         (schedule: any) =>
             Math.abs(
                 Date.parse(schedule.sch_end) - Date.parse(schedule.sch_start)
             ) /
             (60 * 60 * 1000)
-    );
-
-    const yData = scheduleData.map(
-        (schedule: any) =>
-            aircraftList.find(({ tailNum }: any) => tailNum === schedule.n_no)!
-                .costperhour
     );
 
     return (
@@ -40,12 +37,12 @@ const CostVsFlightLength = ({
                 <ScatterPlot
                     xData={xData}
                     yData={yData}
-                    xAxisLabel={'Scheduled flight length (hours)'}
-                    yAxisLabel={'Rental rate (USD per hour)'}
+                    xAxisLabel={'Hour of day'}
+                    yAxisLabel={'Length of scheduled flight (hours)'}
                 />
             ) : null}
         </div>
     );
 };
 
-export default CostVsFlightLength;
+export default LengthVsStart;

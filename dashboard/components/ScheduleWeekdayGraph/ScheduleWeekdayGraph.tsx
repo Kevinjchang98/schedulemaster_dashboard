@@ -16,7 +16,7 @@ const ScheduleWeekDayGraph = ({
 }: Props) => {
     const [width, setWidth] = useState(800);
     const [height, setHeight] = useState(400);
-    const margin = { top: 30, right: 30, bottom: 30, left: 40 };
+    const margin = { top: 30, right: 30, bottom: 30, left: 60 };
     const innerWidth = width - margin.right - margin.left;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -98,7 +98,17 @@ const ScheduleWeekDayGraph = ({
     );
 
     const yAxisLine = (
-        <line x1={0} x2={0} y1={0} y2={innerHeight + 10} stroke="gray" />
+        <>
+            <line x1={0} x2={0} y1={0} y2={innerHeight + 10} stroke="gray" />
+            <text
+                x={-innerHeight / 2}
+                y={-40}
+                transform={`rotate(270)`}
+                style={{ textAnchor: 'middle' }}
+            >
+                Number of scheduled flights
+            </text>
+        </>
     );
 
     const bars = freq.map((d: any, i: any) => (

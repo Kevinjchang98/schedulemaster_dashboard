@@ -1,4 +1,4 @@
-import { extent, scaleBand, scaleLinear } from 'd3';
+import { extent, scaleLinear } from 'd3';
 import { useEffect, useRef, useState } from 'react';
 import useResizeObserver from '../../hooks/useResizeObserver';
 import styles from '../../styles/BarChart.module.css';
@@ -6,12 +6,14 @@ import styles from '../../styles/BarChart.module.css';
 interface Props {
     xData: Array<any>;
     yData: Array<any>;
+    xAxisLabel: string;
+    yAxisLabel: string;
 }
 
-const ScatterPlot = ({ xData, yData }: Props) => {
+const ScatterPlot = ({ xData, yData, xAxisLabel, yAxisLabel }: Props) => {
     const [width, setWidth] = useState(800);
-    const [height, setHeight] = useState(400);
-    const margin = { top: 30, right: 30, bottom: 30, left: 30 };
+    const [height, setHeight] = useState(500);
+    const margin = { top: 30, right: 30, bottom: 70, left: 60 };
     const innerWidth = width - margin.right - margin.left;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -19,7 +21,7 @@ const ScatterPlot = ({ xData, yData }: Props) => {
     const extentY: any = extent(yData);
 
     const xScale: any = scaleLinear().domain(extentX).range([0, innerWidth]);
-    const yScale: any = scaleLinear().domain(extentY).range([0, innerHeight]);
+    const yScale: any = scaleLinear().domain(extentY).range([innerHeight, 0]);
 
     const graphRef: any = useRef();
     const dimensions: any = useResizeObserver(graphRef);
@@ -52,17 +54,37 @@ const ScatterPlot = ({ xData, yData }: Props) => {
     ));
 
     const xAxisLine = (
-        <line
-            x1={0}
-            x2={innerWidth}
-            y1={innerHeight}
-            y2={innerHeight}
-            stroke="gray"
-        />
+        <>
+            <line
+                x1={0}
+                x2={innerWidth}
+                y1={innerHeight}
+                y2={innerHeight}
+                stroke="gray"
+            />
+            <text
+                x={innerWidth / 2}
+                y={innerHeight + 55}
+                style={{ textAnchor: 'middle' }}
+            >
+                {xAxisLabel}
+            </text>
+        </>
     );
     const yAxisLine = (
-        <line x1={0} x2={0} y1={0} y2={innerHeight} stroke="gray" />
+        <>
+            <line x1={0} x2={0} y1={0} y2={innerHeight + 10} stroke="gray" />
+            <text
+                x={-innerHeight / 2}
+                y={-40}
+                transform={`rotate(270)`}
+                style={{ textAnchor: 'middle' }}
+            >
+                {yAxisLabel}
+            </text>
+        </>
     );
+
     const marks = xData.map((x: number, i: number) => (
         <circle
             cx={xScale(x)}
