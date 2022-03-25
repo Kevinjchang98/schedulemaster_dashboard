@@ -61,7 +61,7 @@ const ScatterPlot = ({ xData, yData }: Props) => {
         />
     );
     const yAxisLine = (
-        <line x1={0} x2={0} y1={0} y2={innerHeight} stroke="gray" />
+        <line x1={0} x2={0} y1={0} y2={innerHeight + 10} stroke="gray" />
     );
     const marks = xData.map((x: number, i: number) => (
         <circle
