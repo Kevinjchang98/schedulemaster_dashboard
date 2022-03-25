@@ -21,7 +21,7 @@ const ScatterPlot = ({ xData, yData, xAxisLabel, yAxisLabel }: Props) => {
     const extentY: any = extent(yData);
 
     const xScale: any = scaleLinear().domain(extentX).range([0, innerWidth]);
-    const yScale: any = scaleLinear().domain(extentY).range([0, innerHeight]);
+    const yScale: any = scaleLinear().domain(extentY).range([innerHeight, 0]);
 
     const graphRef: any = useRef();
     const dimensions: any = useResizeObserver(graphRef);
